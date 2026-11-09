@@ -258,6 +258,9 @@ svg { width: 18px; height: 18px; flex: 0 0 auto; }
 .settings-footnote { margin: 13px 0 0; color: #8a7b74; font: 400 9px/1.5 var(--font-ui); }
 
 .discover-controls { display: grid; justify-items: start; gap: 11px; border-bottom: 1px solid #e7dcd7; padding-bottom: 20px; }
+.discover-request { display: flex; width: min(100%, 700px); align-items: end; gap: 10px; }
+.discover-context { flex: 1; min-width: 0; }
+.discover-context label span { color: #897a71; font-weight: 500; }
 .generate-button { min-height: 48px; padding: 0 19px; }
 .data-sharing-note { display: flex; align-items: center; gap: 7px; margin: 0; color: #776960; font: 300 10px/1.5 var(--font-body); }
 .data-sharing-note svg { width: 15px; height: 15px; color: var(--green); }
@@ -291,6 +294,7 @@ svg { width: 18px; height: 18px; flex: 0 0 auto; }
   .catalogue-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 700px) {
+  .discover-request { flex-direction: column; align-items: stretch; }
   .library-heading { align-items: flex-start; }
   .library-heading .page-title { font-size: 26px; }
   .library-add { min-height: 38px; padding: 0 10px; white-space: nowrap; }

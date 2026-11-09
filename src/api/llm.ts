@@ -93,9 +93,13 @@ function describeBook(book: TrackedBook): string {
   return `- ${parts.join(' | ')}`
 }
 
-function buildUserPrompt(books: TrackedBook[]): string {
+function buildUserPrompt(books: TrackedBook[], context: string): string {
   const library = books.map(describeBook).join('\n')
-  return `Use this complete library as taste data. S/A are strong positives, B is positive with reservations, C/D are cautionary, and Dislike plus its reason is a strong negative. Want-to-read titles are positive interest but must not be suggested again. Consider every personal note and trope, including notes from lower-rated books.\n\n${library}\n\nRecommend 3 to 5 books not already listed above.`
+  const request = context.trim()
+  const requestSection = request
+    ? `\n\nFor this set of recommendations, prioritise the reader's current request while still considering their library and dislikes:\n${request}`
+    : ''
+  return `Use this complete library as taste data. S/A are strong positives, B is positive with reservations, C/D are cautionary, and Dislike plus its reason is a strong negative. Want-to-read titles are positive interest but must not be suggested again. Consider every personal note and trope, including notes from lower-rated books.\n\n${library}${requestSection}\n\nRecommend 3 to 5 books not already listed above.`
 }
 
 function extractJson(content: string): string {
@@ -109,6 +113,7 @@ function extractJson(content: string): string {
 export async function requestRecommendations(
   settings: LLMSettings,
   books: TrackedBook[],
+  context = '',
 ): Promise<{ recommendations: RawRecommendation[]; model: string }> {
   const apiKey = settings.apiKey.trim()
   if (!apiKey) throw new Error('Add your Gemini API key in Settings to get recommendations.')
@@ -136,7 +141,7 @@ export async function requestRecommendations(
         signal: AbortSignal.timeout(20000),
         body: JSON.stringify({
           systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
-          contents: [{ role: 'user', parts: [{ text: buildUserPrompt(books) }] }],
+          contents: [{ role: 'user', parts: [{ text: buildUserPrompt(books, context) }] }],
           generationConfig: { temperature: 0.7, responseMimeType: 'application/json' },
         }),
       })

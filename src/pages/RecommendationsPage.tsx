@@ -18,6 +18,7 @@ export function RecommendationsPage() {
   const [recommendations, setRecommendations] = useState<EnrichedRecommendation[]>([])
   const [status, setStatus] = useState<'idle' | 'loading' | 'error'>('idle')
   const [error, setError] = useState<string | null>(null)
+  const [context, setContext] = useState('')
 
   const trackedIds = useMemo(() => new Set(books.map((b) => b.id)), [books])
 
@@ -25,7 +26,7 @@ export function RecommendationsPage() {
     setStatus('loading')
     setError(null)
     try {
-      const result = await requestRecommendations(llmSettings, books)
+      const result = await requestRecommendations(llmSettings, books, context)
       if (result.model !== llmSettings.model) {
         setLLMSettings({ ...llmSettings, model: result.model })
       }
@@ -56,10 +57,23 @@ export function RecommendationsPage() {
         <div className="discover-setup"><KeyRound aria-hidden="true" /><div><h2>Connect your Gemini key</h2><p>Your key is needed to generate recommendations.</p></div><Link className="button button-primary" to="/settings">Open Settings</Link></div>
       ) : (
         <div className="discover-controls">
-          <button type="button" className="button button-primary generate-button" onClick={handleGenerate} disabled={status === 'loading'}>
-            {status === 'loading' ? <><LoaderCircle className="spin" /> Finding your next read...</> : <><Sparkles /> Generate fresh picks</>}
-          </button>
-          <p className="data-sharing-note"><ShieldCheck aria-hidden="true" /> Your book ratings, notes and tropes are sent directly to Google Gemini for this request.</p>
+          <div className="discover-request">
+            <div className="field-group discover-context">
+              <label htmlFor="recommendation-context">What are you in the mood for? <span>(optional)</span></label>
+              <input
+                id="recommendation-context"
+                className="text-field"
+                type="text"
+                value={context}
+                onChange={(event) => setContext(event.target.value)}
+                placeholder="A novel, rather than a history book..."
+              />
+            </div>
+            <button type="button" className="button button-primary generate-button" onClick={handleGenerate} disabled={status === 'loading'}>
+              {status === 'loading' ? <><LoaderCircle className="spin" /> Finding your next read...</> : <><Sparkles /> Generate fresh picks</>}
+            </button>
+          </div>
+          <p className="data-sharing-note"><ShieldCheck aria-hidden="true" /> Your request, book ratings, notes and tropes are sent directly to Google Gemini.</p>
         </div>
       )}
 
