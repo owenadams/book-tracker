@@ -8,6 +8,7 @@ interface GoogleVolumeInfo {
   categories?: string[]
   publishedDate?: string
   description?: string
+  infoLink?: string
   averageRating?: number
   ratingsCount?: number
   imageLinks?: { thumbnail?: string; smallThumbnail?: string }
@@ -35,6 +36,7 @@ function toMetadata(volume: GoogleVolume): BookMetadata {
     // Google serves cover thumbnails over http; upgrade to https to avoid mixed-content blocks.
     coverUrl: info.imageLinks?.thumbnail?.replace(/^http:/, 'https:') ?? null,
     description: info.description ?? null,
+    sourceUrl: info.infoLink ?? `https://books.google.com/books?id=${encodeURIComponent(volume.id)}`,
     averageRating: info.averageRating ?? null,
     ratingCount: info.ratingsCount ?? null,
   }

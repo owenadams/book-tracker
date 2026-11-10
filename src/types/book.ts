@@ -30,6 +30,7 @@ export interface BookMetadata {
   publishedYear: number | null
   coverUrl: string | null
   description: string | null
+  sourceUrl?: string | null
   averageRating?: number | null
   ratingCount?: number | null
 }

@@ -288,6 +288,13 @@ svg { width: 18px; height: 18px; flex: 0 0 auto; }
 .recommendation-tags span { border-radius: 3px; background: #edf0e9; padding: 4px 7px; color: #516348; font: 600 8px/1.2 var(--font-ui); }
 .recommendation-description { display: -webkit-box; overflow: hidden; margin: 9px 0 0; color: #76665f; font: 300 10px/1.6 var(--font-body); -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
 .recommendation-row blockquote { margin: 12px 0; border-left: 2px solid #bb796b; padding: 2px 0 2px 10px; color: #51433d; font: 300 11px/1.65 var(--font-body); }
+.recommendation-source-link { display: inline-flex; align-items: center; gap: 5px; margin: 0 0 9px; color: #79513d; font: 600 9px/1.4 var(--font-ui); text-decoration: underline; text-underline-offset: 2px; }
+.recommendation-source-link svg { width: 13px; height: 13px; }
+.recommendation-unverified { display: grid; gap: 6px; margin: 0 0 10px; border-left: 2px solid #bf7a35; background: #fbf5eb; padding: 8px 10px; }
+.recommendation-unverified p { margin: 0; color: #73583c; font: 400 9px/1.5 var(--font-ui); }
+.recommendation-unverified div { display: flex; flex-wrap: wrap; gap: 12px; }
+.recommendation-unverified a { display: inline-flex; align-items: center; gap: 4px; color: #79513d; font: 600 9px/1.4 var(--font-ui); text-decoration: underline; text-underline-offset: 2px; }
+.recommendation-unverified svg { width: 12px; height: 12px; }
 .recommendation-actions { display: flex; width: 100%; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 9px; margin-top: auto; }
 
 @media (max-width: 900px) {

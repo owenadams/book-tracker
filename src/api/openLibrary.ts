@@ -29,6 +29,7 @@ function toMetadata(doc: OpenLibraryDoc): BookMetadata {
     publishedYear: doc.first_publish_year ?? null,
     coverUrl: doc.cover_i ? `${OPEN_LIBRARY_COVERS_BASE}/${doc.cover_i}-L.jpg` : null,
     description: doc.first_sentence?.[0] ?? null,
+    sourceUrl: `https://openlibrary.org${doc.key}`,
     averageRating: doc.ratings_average ?? null,
     ratingCount: doc.ratings_count ?? null,
   }
